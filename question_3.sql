@@ -13,9 +13,10 @@ FROM
 GROUP BY
 	pf.name,
 	pf.common_year
-ORDER BY
+/*ORDER BY
 	pf.common_year,
-	pf.price)
+	pf.price*/
+	)
 SELECT
 	*
 FROM
@@ -28,5 +29,3 @@ HAVING
 ORDER BY
 	percent_diff 
 ;
-	
-

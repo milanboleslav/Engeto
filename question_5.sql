@@ -21,10 +21,12 @@ FROM
 GROUP BY
 	year_for_price
 ),
-gdp as(
-SELECT sf.year AS gdp_year,
-sf.percent_diff AS gdp_diff
-FROM t_milan_boleslav_project_sql_secondary_final sf
+gdp AS(
+SELECT
+	sf.year AS gdp_year,
+	sf.percent_diff AS gdp_diff
+FROM
+	t_milan_boleslav_project_sql_secondary_final sf
 )
 SELECT
 	common_year,
@@ -35,7 +37,7 @@ FROM
 	payroll
 LEFT JOIN price ON
 	payroll.common_year = year_for_price
-LEFT JOIN gdp ON payroll.common_year = gdp_year
+LEFT JOIN gdp ON
+	payroll.common_year = gdp_year
 ORDER BY
 	common_year;
-

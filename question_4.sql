@@ -1,5 +1,4 @@
--- Základní pohled v2
-
+-- Základní pohled
 WITH payroll AS
 (
 SELECT
@@ -30,15 +29,8 @@ FROM
 	payroll
 LEFT JOIN price ON
 	payroll.common_year = year_for_price
-/*WHERE
-	percent_diff_price - percent_diff_payroll > 0*/
 ORDER BY
 	difference DESC;
-
-
-
-
-
 
 -- Detailní pohled
 WITH question_1 AS (
@@ -81,7 +73,7 @@ JOIN question_3 ON
 	question_1.common_year = question_3.year_for_price
 WHERE
 	question_3.percent_diff - question_1.percent_diff_payroll > 10
-ORDER BY question_3.percent_diff DESC, question_1.percent_diff_payroll asc
+ORDER BY
+	question_3.percent_diff DESC,
+	question_1.percent_diff_payroll ASC
 	;
-
-
