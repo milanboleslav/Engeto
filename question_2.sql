@@ -1,3 +1,45 @@
+WITH salary AS (
+SELECT
+	pf.common_year AS s_year,
+	round(pf.year_salary) AS avg_salary
+FROM
+	t_milan_boleslav_project_sql_primary_final pf
+GROUP BY
+	pf.common_year
+HAVING
+	common_year IN (2006, 2018)
+),
+prices AS (
+SELECT 	
+	common_year,
+	name,
+	price,
+	price_value,
+	goods_unit
+FROM
+	t_milan_boleslav_project_sql_primary_final pf
+WHERE 
+	(name LIKE 'Mléko%'
+		OR name LIKE 'Chléb%')
+	AND
+	common_year IN (2006, 2018)
+)
+SELECT
+	avg_salary,
+	-- (sum(salary.year_salary)/prices.price,
+	s_year,
+	prices.price,
+	round(avg_salary / prices.price) AS RESULT
+FROM
+	salary
+LEFT JOIN prices ON
+	common_year = s_year
+GROUP BY
+	s_year,
+	prices.price
+;
+
+-- Detail result
 WITH milk_last AS (
 SELECT 
 	last_value(pf.price) OVER (PARTITION BY pf.name
@@ -50,7 +92,6 @@ first_year AS (
 SELECT
 	pf.common_year,
 	pf.industry,
-	--	pf.year_salary,
 	first_value (pf.year_salary) OVER (PARTITION BY pf.industry
 ORDER BY
 	pf.common_year) AS first_year_income
